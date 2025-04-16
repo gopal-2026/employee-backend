@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const PORT = 5000;
+// const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -14,7 +15,17 @@ let employees = [
   { id: '1', name: 'John Doe', email: 'john@example.com', phone: '555-1234', department: 'IT', position: 'Developer', salary: '75000' },
   { id: '2', name: 'Jane Smith', email: 'jane@example.com', phone: '555-5678', department: 'HR', position: 'Manager', salary: '85000' }
 ];
-
+app.get('/', (req, res) => {
+  res.json({
+    message: "Employee Management API",
+    endpoints: {
+      getEmployees: "GET /api/employees",
+      addEmployee: "POST /api/employees",
+      updateEmployee: "PUT /api/employees/:id",
+      deleteEmployee: "DELETE /api/employees/:id"
+    }
+  });
+});
 // Routes
 app.get('/api/employees', (req, res) => {
   res.json(employees);
